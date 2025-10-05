@@ -16,19 +16,21 @@ export class AuthService {
   private router = inject(Router);
 
   async register(user: any) {
-    this.http.post<RegisterResponseInterface>(
-      this.apiUrl + '/user',
-      {
-        name: user.name,
-        email: user.email,
-        password: user.password
-      },
-      this.getOptions()
-    ).subscribe(result => {
-      localStorage.setItem('token', result.token);
-      this.isAuthenticated$.set(true);
+    this.csrfToken().subscribe(() => {
+      this.http.post<RegisterResponseInterface>(
+        this.apiUrl + '/user',
+        {
+          name: user.name,
+          email: user.email,
+          password: user.password
+        },
+        this.getOptions()
+      ).subscribe(result => {
+        localStorage.setItem('token', result.token);
+        this.isAuthenticated$.set(true);
 
-      this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/');
+      });
     });
   }
 
