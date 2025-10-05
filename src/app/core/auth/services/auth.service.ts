@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LoginResponseInterface } from '../interfaces/login-response.interface';
@@ -9,6 +9,8 @@ import { RegisterResponseInterface } from '../interfaces/register-response.inter
   providedIn: 'root'
 })
 export class AuthService {
+  isAuthenticated$ = signal(!!localStorage.getItem('token'));
+
   private apiUrl = '/api/auth';
   private http = inject(HttpClient);
   private router = inject(Router);
@@ -24,6 +26,7 @@ export class AuthService {
       this.getOptions()
     ).subscribe(result => {
       localStorage.setItem('token', result.token);
+      this.isAuthenticated$.set(true);
 
       this.router.navigateByUrl('/');
     });
@@ -40,6 +43,7 @@ export class AuthService {
         this.getOptions()
       ).subscribe(result => {
         localStorage.setItem('token', result.token);
+        this.isAuthenticated$.set(true);
 
         this.router.navigateByUrl('/');
       });
@@ -58,17 +62,10 @@ export class AuthService {
       }
     ).subscribe();
 
-    let removeToken = localStorage.removeItem('token');
+    localStorage.removeItem('token');
+    this.isAuthenticated$.set(false);
 
-    if (removeToken == null) {
-      this.router.navigateByUrl('/auth/login');
-    }
-  }
-
-  public get isAuthenticated(): boolean {
-    //TODO: Check token expiry and other security checks
-
-    return localStorage.getItem('token') !== null;
+    this.router.navigateByUrl('/auth/login');
   }
 
   private getOptions() {

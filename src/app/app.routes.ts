@@ -5,6 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [isAuthenticatedGuard],
+    canActivateChild: [isAuthenticatedGuard],
     loadChildren: () => import('./features/home/routes'),
   },
   {

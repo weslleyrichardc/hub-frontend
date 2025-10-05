@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +11,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 export class Navbar {
   private authService = inject(AuthService);
 
-  isAuthenticated = signal(false);
-
-  constructor() {
-    this.isAuthenticated.set(this.authService.isAuthenticated);
-  }
+  isAuthenticated$ = this.authService.isAuthenticated$;
 
   logout() {
     this.authService.logout();

@@ -18,10 +18,23 @@
     </ul>
   </div>
   <div class="navbar-end">
-    @if(!isAuthenticated()) {
+    @if(!isAuthenticated$()) {
       <a class="btn" href="/auth/login">Sign In</a>
     } @else {
-      <a class="btn" (click)="logout()">Sign Out</a>
+      <div class="dropdown dropdown-end mr-4">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <img
+              alt="Profile Image"
+              src="https://placehold.co/50x50?text=X" />
+          </div>
+        </div>
+        <ul
+          tabindex="0"
+          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+          <li><a (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
     }
   </div>
 </div>
