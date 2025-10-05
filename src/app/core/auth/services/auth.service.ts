@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 import { LoginResponseInterface } from '../interfaces/login-response.interface';
 import { RegisterResponseInterface } from '../interfaces/register-response.interface';
 
+import { environment } from '../../../../environments/environments';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   isAuthenticated$ = signal(!!localStorage.getItem('token'));
 
-  private apiUrl = '/api/auth';
+  private apiUrl = environment.apiUrl + '/api/auth';
   private http = inject(HttpClient);
   private router = inject(Router);
 
