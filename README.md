@@ -38,8 +38,8 @@ O frontend utiliza autenticação via **Bearer Token** (Sanctum) obtido no backe
 
 
 ## Roadmap
-- [ ] Estrutura inicial do projeto Angular
-- [ ] Integração com o backend para login e registro
+- [x] Estrutura inicial do projeto Angular
+- [x] Integração com o backend para login e registro
 - [ ] Implementar listagens de mídia agregada
 - [ ] Criar sistema de filtros e recomendações
 - [ ] Adicionar suporte a múltiplos agregadores (Spotify, TMDb, etc.)
