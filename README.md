@@ -1,59 +1,46 @@
-# Hub
+# Hub Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+Frontend do projeto **Hub**, responsável por exibir informações agregadas de diferentes plataformas, como músicas, filmes e outros tipos de mídia.
 
-## Development server
+Ele se conecta à API do backend para apresentar dados unificados e personalizados para cada usuário.
 
-To start a local development server, run:
+## Visão Geral
+O Hub Frontend é desenvolvido com **Angular**, comunicando-se com o **Hub Backend** via API REST.
 
+O objetivo é permitir que os usuários acessem seus agregadores (Spotify, YouTube Music, TMDb, etc.) e visualizem listas unificadas, como:
+- Músicas salvas ou ouvidas recentemente
+- Filmes assistidos e sugestões para assistir
+- Itens agregados de outras fontes futuras (livros, séries, etc.)
+
+## Tecnologias Principais
+- **Angular 20**
+- **TypeScript**
+- **TailwindCSS**
+
+## Instalação e Execução
 ```bash
-ng serve
+# Clone o repositório
+git clone https://github.com/weslleyrichardc/hub-frontend.git
+cd hub-frontend
+
+# Instale as dependências
+npm install
+
+# Execute o servidor de desenvolvimento
+npm run start
+
+# Acesse em
+http://localhost:4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Autenticação
+O frontend utiliza autenticação via **Bearer Token** (Sanctum) obtido no backend. Após o login, o token é armazenado localmente e usado nas requisições subsequentes.
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Roadmap
+- [ ] Estrutura inicial do projeto Angular
+- [ ] Integração com o backend para login e registro
+- [ ] Implementar listagens de mídia agregada
+- [ ] Criar sistema de filtros e recomendações
+- [ ] Adicionar suporte a múltiplos agregadores (Spotify, TMDb, etc.)
+- [ ] Tema escuro e responsividade total
