@@ -82,6 +82,6 @@ export class AuthService {
   }
 
   private csrfToken() {
-    return this.http.get('/sanctum/csrf-cookie', { withCredentials: true });
+    return this.http.get(environment.apiUrl + '/sanctum/csrf-cookie', { withCredentials: true });
   }
 }
