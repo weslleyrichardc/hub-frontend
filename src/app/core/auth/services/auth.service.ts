@@ -6,6 +6,7 @@ import { LoginResponseInterface } from '../interfaces/login-response.interface';
 import { RegisterResponseInterface } from '../interfaces/register-response.interface';
 
 import { environment } from '../../../../environments/environments';
+import { switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,40 +19,57 @@ export class AuthService {
   private router = inject(Router);
 
   async register(user: any) {
-    this.csrfToken().subscribe(() => {
-      this.http.post<RegisterResponseInterface>(
-        this.apiUrl + '/user',
-        {
-          name: user.name,
-          email: user.email,
-          password: user.password
-        },
-        this.getOptions()
-      ).subscribe(result => {
-        localStorage.setItem('token', result.token);
-        this.isAuthenticated$.set(true);
+    this.csrfToken()
+      .pipe(
+        switchMap(() =>
+          this.http.post<RegisterResponseInterface>(
+            this.apiUrl + '/user',
+            {
+              name: user.name,
+              email: user.email,
+              password: user.password
+            },
+            this.getOptions()
+          )
+        )
+      )
+      .subscribe({
+        next: (result) => {
+          localStorage.setItem('token', result.token);
+          this.isAuthenticated$.set(true);
 
-        this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/');
+        },
+        error: (err) => {
+          console.error('Erro no registro:', err);
+        }
       });
-    });
   }
 
   async login(credentials: any) {
-    this.csrfToken().subscribe(() => {
-      this.http.post<LoginResponseInterface>(
-        this.apiUrl + '/login',
-        {
-          "email": credentials.email,
-          "password": credentials.password
+    this.csrfToken()
+      .pipe(
+        switchMap(() =>
+          this.http.post<LoginResponseInterface>(
+            this.apiUrl + '/login',
+            {
+              email: credentials.email,
+              password: credentials.password
+            },
+            this.getOptions()
+          )
+        )
+      )
+      .subscribe({
+        next: (result) => {
+          localStorage.setItem('token', result.token);
+          this.isAuthenticated$.set(true);
+          this.router.navigateByUrl('/');
         },
-        this.getOptions()
-      ).subscribe(result => {
-        localStorage.setItem('token', result.token);
-        this.isAuthenticated$.set(true);
-
-        this.router.navigateByUrl('/');
+        error: (err) => {
+          console.error('Erro no login:', err);
+        }
       });
-    });
   }
 
   async logout() {
